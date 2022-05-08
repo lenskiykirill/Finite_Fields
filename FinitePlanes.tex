@@ -1,0 +1,168 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ===============================================
+% MATH 790: Real Analysis           Spring 2022
+% hw_template.tex
+% ===============================================
+
+% -------------------------------------------------------------------------
+% The preamble that follows can be ignored. Go on
+% down to the section that says "START HERE" 
+% -------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{}
+\usetikzlibrary{calc}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,hyperref}
+
+\newcommand{\R}{\mathbf{R}}  
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\Q}{\mathbf{Q}}
+
+\newenvironment{theorem}[2][Теорема]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{definition}[2][Определение]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Лемма]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Упражнение]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Задача]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Открытый вопрос]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Следствие]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{hence}[2][Следствие]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+\newcommand\FanoPlane[1][1cm]{%
+\begin{tikzpicture}[
+mydot/.style={
+  draw,
+  circle,
+  fill=black,
+  inner sep=1.2pt}
+]
+\draw
+  (0,0) coordinate (A) --
+  (#1,0) coordinate (B) --
+  ($ (A)!.5!(B) ! {sin(60)*2} ! 90:(B) $) coordinate (C) -- cycle;
+\coordinate (O) at
+  (barycentric cs:A=1,B=1,C=1);
+\draw (O) circle [radius=#1*1.717/6];
+\draw (C) -- ($ (A)!.5!(B) $) coordinate (LC); 
+\draw (A) -- ($ (B)!.5!(C) $) coordinate (LA); 
+\draw (B) -- ($ (C)!.5!(A) $) coordinate (LB); 
+\foreach \Nodo in {A,B,C,O,LC,LA,LB}
+  \node[mydot] at (\Nodo) {};    
+\end{tikzpicture}%
+}
+
+\begin{document}
+
+\title{Конечные геометрии}
+\author{Ленский Кирилл\\матпрактикум ФПМИ}
+
+\maketitle
+
+% -----------------------------------------------------
+% The following two environments (theorem, proof) are
+% where you will enter the statement and proof of your
+% first problem for this assignment.
+%
+% In the theorem environment, you can replace the word
+% "theorem" in the \begin and \end commands with
+% "exercise", "problem", "lemma", etc., depending on
+% what you are submitting. 
+% -----------------------------------------------------
+
+\begin{definition}{(Конечное поле)}
+Конечным полем (полем Галуа) $GF(q)$ для некоторой степени простого $q=p^k$ называется поле из $q$ элементов
+\end{definition}
+\begin{exercise}{(Корректность определения)}
+Докажите, что $\forall{q=p^k}$ существует $GF(q)$, причем единственное с точностью до изоморфизма.
+\end{exercise}
+
+\begin{definition}{(Геометрия Галуа)}
+Пусть $V$ - векторное пространство размерности $n+1$ над полем $GF(q)$. Тогда проективное пространство $PG(n,q)$ состоит из $V'\subset V:dim V \neq 0$.
+\end{definition}
+
+\begin{exercise}{(Число подпространств)}
+Докажите, что подпространств $V$ размерности $m+1$ в точности $\frac{(q^{n+1}-1)(q^{n+1}-q)\cdots(q^{n+1}-q^{m})}{(q^{m+1}-1)(q^{m+1}-q)\cdots(q^{m+1}-q^m)}$
+\end{exercise}
+
+\begin{exercise}{(Конечная проективная плоскость)}
+Пусть есть множествa "точек" $P$ и "прямых" $L$, и отношение инцидентности $R\in2^{P\times L}$ такие, что существуют 4 точки, никакие 3 из которых не инцидентны одной прямой, любым двум точкам инцидентна ровно одна общая прямая, а любой паре прямых - ровно одна общая точка. Тогда
+
+а) каждые 2 прямые инцидентны равному числу точек
+
+б) каждые 2 точки инцидентны равному числу прямых
+
+в) пусть на прямой лежит $q+1$ точка. Тогда через каждую точку проходит $q+1$ прямая.
+% рассмотреть точку не на прямой. И прямые через нее
+
+г) всего точек, как и прямых, $q^2+q+1$
+\end{exercise}
+\begin{center}
+    \FanoPlane[5cm]
+\end{center}
+
+Можно было бы подумать, что любая конечная проективная плоскость изоморфна $PG(2,q)$ для некоторого поля $GF(q)$, но это не так. Контрпример существует уже при $q=9$. С другой стороны, до сих пор не выяснено, всегда ли порядок конечной проективной плоскости - степень простого числа.
+% На самом деле результат не столь удивительный
+% ведь даже для плоскости порядка 12 компьютер уже не
+% справляется с перебором.
+
+\begin{definition}{(Афинная геометрия Галуа)}
+Для некоторого натурального $n$ и степени простого $q=p^k$ афинной плоскостью Галуа $AG(n,q)$ называется множество $PG(n,q)$, без одного из подпространств размерности $n$ и всех инцидентных ему. (Точки в $AG$ можно описать числами $(x_1,\dots, x_n), \\{\forall{i}\; x_i\in[1,q]}$)
+\end{definition}
+
+По аналогии с конечной проективной плоскостью, можно определить и \emph{конечную афинную плоскость}. Это такой набор точек и прямых, что существуют четыре точки, никакие три из которых не инцидентны одной прямой, у любых двух точек найдется общая прямая, инцидентная им обеим, а для любой прямой $l$ и точки $P$, не инцидентной ей, $\exists!$ прямая $l'$ такая, что $P$ инцидентна ей, а $l$ не имеет с ней общих инцидентных точек.
+
+\begin{exercise}{(Двойственность афинной и проективной плоскостей)}
+Если существует конечная афинная плоскость порядка $q$, то существует и проективная того же порядка. И наоборот.
+\end{exercise}
+
+\begin{hence}{}
+Из решения задачи становится очевидным, что любая конечная афинная плоскость состоит из $q^2$ точек и $q^2+q$ прямых.
+\end{hence}
+
+\begin{theorem}{Дезарга}
+На $\mathbb{R}\mathbf{P}^2$ теорема Дезарга формулируется так: пусть даны $\triangle ABC$, $\triangle A'B'C'$. Пусть $AA'$, $BB'$ и $CC'$ пересекаются в одной точке. Тогда точки $AB\cap A'B'$, $BC\cap B'C'$ и $CA\cap C'A'$ лежат на одной прямой. Однако в других проективных геометриях аналогичное утверждение вполне может быть неверным. Геометрии, где она выполняется, называются \emph{Дезарговыми}.
+\end{theorem}
+
+%\begin{exercise}{(Связь конечной проективной плоскости и теоремы Дезарга)*}
+%Конечная проективная плоскость порядка $q$ является проективной плоскостью над некоторым телом (кольцом, в котором у каждого элемента есть обратный) тогда и только тогда, когда она Дезаргова.
+%\end{exercise}
+
+\begin{theorem}{(Tamas Szonyi, 1994)}
+
+\end{theorem}
+
+\begin{theorem}{(Benedetto, Solymosi, White, 2020)}
+Пусть $A,B\subset GF(p),\; {|A|},{|B|}\ge 2$. Тогда число различных \emph{направлений} (классов эквивалентности параллельных прямых) во множестве вида 
+\end{theorem}
+
+\begin{proof}
+\emph{Галуа крут}
+\end{proof}
+
+\end{document}
