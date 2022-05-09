@@ -1,22 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% Welcome to Overleaf --- just edit your LaTeX on the left,
-% and we'll compile it for you on the right. If you open the
-% 'Share' menu, you can invite other users to edit at the same
-% time. See www.overleaf.com/learn for more info. Enjoy!
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% ===============================================
-% MATH 790: Real Analysis           Spring 2022
-% hw_template.tex
-% ===============================================
-
-% -------------------------------------------------------------------------
-% The preamble that follows can be ignored. Go on
-% down to the section that says "START HERE" 
-% -------------------------------------------------------------------------
-
 \documentclass{article}
 
 \usepackage[T2A]{fontenc}
@@ -24,11 +5,13 @@
 \usepackage[russian]{babel}
 \usepackage{amsmath,amsfonts}
 \usepackage{tikz}
+\usepackage{mathrsfs}
 \usetikzlibrary{}
 \usetikzlibrary{calc}
 
 \usepackage[margin=1in]{geometry} 
-\usepackage{amsmath,amsthm,amssymb,hyperref}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[hidelinks]{hyperref}
 
 \newcommand{\R}{\mathbf{R}}  
 \newcommand{\Z}{\mathbf{Z}}
@@ -52,7 +35,7 @@
 \newenvironment{hence}[2][Следствие]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2}]}{\end{trivlist}}
 
-\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+\newenvironment{solution}{\begin{proof}[Доказательство]}{\end{proof}}
 
 \newcommand\FanoPlane[1][1cm]{%
 \begin{tikzpicture}[
@@ -76,6 +59,8 @@ mydot/.style={
   \node[mydot] at (\Nodo) {};    
 \end{tikzpicture}%
 }
+
+\newcommand{\divby}{\ \tikz \foreach \y in {0ex, 0.65ex, 1.3ex} \fill (0,\y) circle (0.5pt);\ }
 
 \begin{document}
 
@@ -104,6 +89,10 @@ mydot/.style={
 
 \begin{definition}{(Геометрия Галуа)}
 Пусть $V$ - векторное пространство размерности $n+1$ над полем $GF(q)$. Тогда проективное пространство $PG(n,q)$ состоит из $V'\subset V:dim V \neq 0$.
+\end{definition}
+
+\begin{definition}{(Однородные координаты)}
+На проективном пространстве размерности $n$ над полем $\mathbb{F}$ каждую точку можно охарактеризовать классом эквивалентности кортежей $(x_1,\dots,x_{n+1})\in\mathbb{F}^{n+1}$ по отношению пропорциональности. Набор $x_1,\dots,x_{n+1}$ называется однородными координатами точки.
 \end{definition}
 
 \begin{exercise}{(Число подпространств)}
@@ -153,16 +142,58 @@ mydot/.style={
 %Конечная проективная плоскость порядка $q$ является проективной плоскостью над некоторым телом (кольцом, в котором у каждого элемента есть обратный) тогда и только тогда, когда она Дезаргова.
 %\end{exercise}
 
-\begin{theorem}{(Tamas Szonyi, 1994)}
+\begin{definition}{(Алгебраическая кривая)}
+Алгебраической кривой над полем $k$, заданной многочленом $F\in k[X,Y]$ называется множество пар точек $\{(x,y)\,|\,x,y\in k,\;F(x,y)=0\}$.
+Если $\mathscr{C}$ - алгебраическая кривая, заданная неприводимым над $k$ многочленом $F$, кривую $\mathscr{C}$ так же называют \emph{неприводимой}. Если $F$ неприводим над $\overline{k}$ - алгебраическом замыкании $k$, $\mathscr{C}$ называют \emph{абсолютно неприводимой}.
+\end{definition}
 
+\begin{definition}{(Алгебраическая кривая на проективной плоскости)}
+Алгебраическая кривая над полем $k$, заданная однородным многочленом $F\in k[X,Y]$ называется алгебраической кривой над проективной плоскостью. 
+\end{definition}
+
+\noindent(То, что алгебраическое замыкание любого поля существует и при том единственно относительно изоморфизмов, оставляющих элементы замыкаемого поля на месте, доказывается не слишком сложно, и восстановление пробелов в доказательстве из Википедии можно воспринимать в качестве упражнения)
+
+\begin{theorem}{(Tamas Szonyi, 1994)}
+Любому множеству точек мощности $q-n$ на $AG(2,q)$ можно сопоставить алгебраическую кривую степени $n$ так, что ее линейные компоненты будут соответствовать точкам, которыми можно дополнить множество так, что количество различных \emph{направлений} (классов эквивалентности параллельных прямых) не изменится. Причем множество линейных компонент окажется непусто.
 \end{theorem}
+
+\begin{solution}{}
+$ $
+\begin{definition}{1}
+Пусть $D$ - подмножество направлений на $PG(2,q)$. Пусть $U$ - подмножество точек на $AG(2,q)$. Тогда $U$ называется $D$-множеством (\emph{$D$-set}), если множество направлений, определяемых парами точек из $U$ совпадает с $D$. $D$-множество называется полным, если оно максимально по включению. (Иными словами, $\forall{u}\notin U$ множество $U\cup \{u\}$ содержит направление, которого не было в $U$)
+\end{definition}
+\begin{theorem}{(Andre Weil, Helmut Hasse, 1948)}
+Пусть $\mathscr(C)$ - абсолютно неприводимая плоская кривая, определенная над $GF(q)$. Пусть $d$ - ее степень, а $R_q$ - число точек $PG(2,q)$, лежащих на $\mathscr{C}$. Тогда справедливо неравенство $|R_q-(q+1)|\le(d-1)(d-2)\sqrt{q}$.
+\footnote{\url{https://www.ime.unicamp.br/~ftorres/RESEARCH/ARTS_PDF/hkt_sur.pdf}}
+\footnote{\url{https://terrytao.wordpress.com/tag/hasse-weil-bound/}}
+\end{theorem}
+\begin{lemma}{1}
+Пусть $\mathscr{C}_n\;(n\ge2)$ - кривая порядка $n$, определенная над $GF(q)$. Пусть $N$ - число точек $\mathscr{C}_n$ в $AG(2,q)$. Более того, пусть в $\mathscr{C}_n$ нет линейных компонент и $n\le\frac{\sqrt{q}}{2}$. Тогда
+\begin{enumerate}
+\item[(1)]{$N\le n(q+1)/2$. Более того,}
+\item[(2)]{$N=n(q+1)/2\implies\mathscr{C}_n$ - объединение коник (т.е. произведение уравнений второй степени. Из этого следует, что $n\divby2$)}
+\end{enumerate}
+\end{lemma}
+\begin{solution}\renewcommand{\qedsymbol}{}
+Предположим, что $\mathscr{C}_n$ абсолютно неразложима. Тогда, согласно оценке Вейла-Хассе,
+$N\le (q+1) + (n-1)(n-2)\sqrt{q}\; \le\; q+1+(n-2)q/2 = nq/2 + 1 \le n(q+1)/2$. Эти неравенства верны при $n\ge2$ и являются строгими для $n\neq2$.
+\\
+
+\noindent Пусть теперь $\mathscr{C}_n$ необязательно является абсолютно неразложимой. Тогда ее можно записать в качестве объединения абсолютно неразложимых кривых $\mathscr{C}_n = 
+\mathscr{D}_{i_1}\cup\cdots\cup\mathscr{D}_{i_s}$. Здесь $i_s$ обозначает порядок $s$-й компоненты, следовательно $n=\sum\limits_{j=1}^{s}{i_j}$. Обозначим за $N_{i_j}$ число точек $PG(2,q)$ на кривой $\mathscr{D}_{i_j}$. Если $\mathscr{D}_{i_j}$ определена над $GF(q)$, то, по первой части доказательства, $N_{i_j}\le i_j(q+1)/2$. В противном случае, можно показать, что $N_{i_j}\le(i_j)^2$.
+\\
+
+\noindent В самом деле, пусть $\mathbb{F}$ - некоторое поле, $P\in\overline{\mathbb{F}}[x,y,z]$ - однородный многочлен степени $d$, определенный на его замыкании, но не определимый над $\mathbb{F}$. Тогда покажем, что если у $P$ хотя бы $d^2+1$ решение в $\mathbb{F}$, то он приводим. Во-первых, очевидно, чт
+
+\end{solution}
+\end{solution}{}
 
 \begin{theorem}{(Benedetto, Solymosi, White, 2020)}
 Пусть $A,B\subset GF(p),\; {|A|},{|B|}\ge 2$. Тогда число различных \emph{направлений} (классов эквивалентности параллельных прямых) во множестве вида 
 \end{theorem}
 
-\begin{proof}
+\begin{solution}{}
 \emph{Галуа крут}
-\end{proof}
+\end{solution}
 
 \end{document}
